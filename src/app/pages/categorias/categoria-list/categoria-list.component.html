@@ -22,22 +22,13 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td><strong>Lazer</strong><br>
-      <small>Cinema, parque, praia, etc</small>
+    <tr *ngFor="let c of categorias">
+      <td><strong>{{c.nome}}</strong><br>
+      <small>{{c.descricao}}</small>
     </td>
     <td>
-      <a [routerLink]="[12,'edit']" class="btn btn-outline-info btn-sm me-2">Editar</a>
-      <button  class="btn btn-outline-danger btn-sm">Excluir</button>
-    </td>
-    </tr>
-    <tr>
-      <td><strong>Lazer</strong><br>
-      <small>Cinema, parque, praia, etc</small>
-    </td>
-    <td>
-      <a [routerLink]="[12,'edit']" class="btn btn-outline-info btn-sm me-2">Editar</a>
-      <button  class="btn btn-outline-danger btn-sm">Excluir</button>
+      <a [routerLink]="[c.id,'edit']" class="btn btn-outline-info btn-sm me-2">Editar</a>
+      <button (click)="delete(c)" class="btn btn-outline-danger btn-sm">Excluir</button>
     </td>
     </tr>
 
