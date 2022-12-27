@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -11,4 +12,4 @@ import { CategoriasRoutingModule } from './categorias-routing.module';
     CategoriasRoutingModule
   ]
 })
-export class CagoriasModule { }
+export class CategoriasModule { }

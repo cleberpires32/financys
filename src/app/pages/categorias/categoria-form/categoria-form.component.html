@@ -7,7 +7,7 @@
 
 <div class="row mb-4">
   <div class="col-md">
-    <h1 class="h2 border-left ps-2">Formulário de Categorias</h1>
+    <h1 class="h2 border-left ps-2">Formulário de Categorias {{currentAction}}</h1>
   </div>
   <div class="col-md">
     <a routerLink="now" class="btn float-md-end btn-light">
@@ -15,7 +15,7 @@
   </div>
 </div>
 
-<form>
+<form [formGroup]="categoriaForm">
   <div class="card">
     <div class="card-header">Informações sobre a categoria</div>
 
