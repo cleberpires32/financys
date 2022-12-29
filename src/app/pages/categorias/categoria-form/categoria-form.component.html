@@ -1,21 +1,22 @@
 <nav class="mb-5">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-    <li class="breadcrumb-item active">Formulário de Categorias</li>
+    <li class="breadcrumb-item"><a routerLink="/categorias">Categorias</a></li>
+    <li class="breadcrumb-item active">{{pageTitle}}</li>
   </ol>
 </nav>
 
 <div class="row mb-4">
   <div class="col-md">
-    <h1 class="h2 border-left ps-2">Formulário de Categorias {{currentAction}}</h1>
+    <h1 class="h2 border-left ps-2">{{pageTitle}}</h1>
   </div>
   <div class="col-md">
-    <a routerLink="now" class="btn float-md-end btn-light">
+    <a routerLink="/categorias" class="btn float-md-end btn-light">
       << Voltar</a>
   </div>
 </div>
 
-<form [formGroup]="categoriaForm">
+<form [formGroup]="categoriaForm" (submit)="submitForm()">
   <div class="card">
     <div class="card-header">Informações sobre a categoria</div>
 
@@ -23,15 +24,20 @@
       <div class="row">
         <div class="form-group col-md-4">
           <label for="name">Nome</label>
-          <input type="text" class="form-control" id="name">
+          <input type="text" class="form-control" id="name" formControlName="name">
+          <div class="text-danger" *ngIf="categoriaForm.get('name').invalid && categoriaForm.get('name').touched">
+            <div *ngIf="categoriaForm.get('name').errors.required">dado obrigatório</div>
+            <div *ngIf="categoriaForm.get('name').errors.minlength">deve ter no mínimo 2 catacteres</div>
+          </div>
         </div>
         <div class="form-group col-md-8">
           <label for="descricao">Descrição</label>
-          <input type="text" class="form-control" id="descricao">
+          <input type="text" class="form-control" id="descricao" formControlName="descricao">
         </div>
       </div>
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary btn-lg float-end mt-3">Salvar</button>
+  <button [disabled]="submitTingForm || categoriaForm.invalid" type="submit" class="btn btn-primary btn-lg float-end mt-3">
+    Salvar</button>
 </form>

@@ -14,7 +14,7 @@ import * as toastr from 'toastr';
 })
 export class CategoriaFormComponent implements OnInit, AfterContentChecked {
   currentAction: string = ''; // vai definir qual formulario estou trabalhando editandaou ou new
-  categoriaForm: FormGroup | any  ; //Criação do formulario
+  categoriaForm: FormGroup | any; //Criação do formulario
   pageTitle: string = ''; // Titulo da pagina do formulario que será alterado de acordo com o pedido
   serverErrorMessages: string[] = [];// conjunto de mensagens.
   submitTingForm: boolean = false; //desabilita o botoao para não deixar requisitando formulario sem validações
@@ -34,6 +34,15 @@ export class CategoriaFormComponent implements OnInit, AfterContentChecked {
     this.buildCategoriaForm();//controi/defini o formulario de categoria
     this.loadCategoria();//carrega a categoria vindo do base e seta no objeto
 
+  }
+
+  submitForm() {
+    this.submitTingForm = true;
+    if (this.currentAction == 'new') {
+      this.createCategoria();
+    } else {
+      this.updateCategoria();
+    }
   }
 
   ngAfterContentChecked(): void {
@@ -78,7 +87,42 @@ export class CategoriaFormComponent implements OnInit, AfterContentChecked {
       this.pageTitle = 'Cadastro de Nova Categoria'
     else {
       const categoriaNome = this.categoria.nome || '';
-      this.pageTitle = `Editando Categoria ${categoriaNome}`;
+      this.pageTitle = 'Editando Categoria: ' + categoriaNome ;
     }
   }
+
+   createCategoria() {
+    const categoria: Categoria = Object.assign(new Categoria(), this.categoriaForm.value);
+    this.categoriaservice.create(categoria).subscribe((categoria) => this.actionsForSuccess(categoria),
+      error => this.actionsForError(error));
+  }
+
+  private updateCategoria() {
+    const categoria: Categoria = Object.assign(new Categoria(), this.categoriaForm.value);
+    this.categoriaservice.update(categoria).subscribe((categoria) => this.actionsForSuccess(categoria),
+    error => this.actionsForError(error));
+   }
+
+  private actionsForSuccess(categoria: Categoria){
+    toastr.success('Solicitação processada com sucesso!');
+    //redirect/reload component page - o skiplocation salta da path categorias direto para edit nçao guarda sessão no browser 'categorias', {skipLocationChange: true}
+    //nome dosite.com/categorias/new
+        //nome dosite.com/categorias
+            //nome dosite.com/categorias/:id/edit
+    this.router.navigateByUrl('categorias', {skipLocationChange: true}).then(
+      () => this.router.navigate(['categorias', categoria.id, 'edit']))
+  }
+
+  private actionsForError(error: any)
+  {
+    toastr.error('Ocorreu um erro ao processar a sua solicitação!')
+    this.submitTingForm = false;
+    if(error.status === 4222){
+      this.serverErrorMessages = JSON.parse(error._body).erros;
+    }else{
+      this.serverErrorMessages = ['Falha na comunicação com o servidor. por favor, teste mais tarde.']
+    }
+
+  }
+
 }
