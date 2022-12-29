@@ -37,7 +37,7 @@ export class CategoriaService {
 
   update(categoria: Categoria): Observable<Categoria> {
     const url = `${this.apiPath}/${categoria.id}`;
-    return this.http.put(url, categoria).pipe(catchError(this.handleError), map(() => categoria))
+    return this.http.put('url', categoria).pipe(catchError(this.handleError), map(() => categoria))
   }
 
   delete(id: number): Observable<any> {

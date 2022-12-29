@@ -16,7 +16,7 @@ export class CategoriaFormComponent implements OnInit, AfterContentChecked {
   currentAction: string = ''; // vai definir qual formulario estou trabalhando editandaou ou new
   categoriaForm: FormGroup | any; //Criação do formulario
   pageTitle: string = ''; // Titulo da pagina do formulario que será alterado de acordo com o pedido
-  serverErrorMessages: string[] = [];// conjunto de mensagens.
+  serverErrorMessages: string[] | any;// conjunto de mensagens.
   submitTingForm: boolean = false; //desabilita o botoao para não deixar requisitando formulario sem validações
   categoria: Categoria = new Categoria();
 
@@ -117,10 +117,10 @@ export class CategoriaFormComponent implements OnInit, AfterContentChecked {
   {
     toastr.error('Ocorreu um erro ao processar a sua solicitação!')
     this.submitTingForm = false;
-    if(error.status === 4222){
+    if(error.status === 422){
       this.serverErrorMessages = JSON.parse(error._body).erros;
     }else{
-      this.serverErrorMessages = ['Falha na comunicação com o servidor. por favor, teste mais tarde.']
+      this.serverErrorMessages = ['Falha na comunicação com o servidor. por favor, tente mais tarde.']
     }
 
   }
