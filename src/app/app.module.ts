@@ -10,13 +10,15 @@ import { CategoriaListComponent } from './pages/categorias/categoria-list/catego
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataBase } from './in-memory-database';
 import { EntryListComponent } from './pages/entries/entry-list/entry-list.component';
+import { EntryFormComponent } from './pages/entries/entry-form/entry-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CategoriaFormComponent,
     CategoriaListComponent,
-    EntryListComponent
+    EntryListComponent,
+    EntryFormComponent
   ],
   imports: [
     BrowserModule,
