@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
+  {path: 'entries', loadChildren: () => import('./pages/entries/entries.module').then(e => e.EntriesModule)},
   {path: 'categorias', loadChildren: () => import('./pages/categoria/categorias.module').then(x => x.CategoriasModule)}
 ]
 @NgModule({

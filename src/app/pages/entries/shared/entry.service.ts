@@ -17,10 +17,10 @@ export class EntryService {
     return this.http.get(this.apiPath).pipe(
       catchError(this.handleError),
       map(this.jsonDataToCategorias)
-      );
+    );
   }
 
-  getById(id: number){
+  getById(id: number) {
     const url = `${this.apiPath}/${id}`;
     return this.http.get(url).pipe(
       catchError(this.handleError),
@@ -28,7 +28,7 @@ export class EntryService {
   }
 
   create(entry: Entry): Observable<Entry> {
-    return this.http.post(this.apiPath,entry).pipe(
+    return this.http.post(this.apiPath, entry).pipe(
       catchError(this.handleError),
       map(this.jsonDataToCategoria)
     )
@@ -41,7 +41,7 @@ export class EntryService {
 
   delete(id: number): Observable<any> {
     const url = `${this.apiPath}/${id}`;
-    return this.http.delete(url).pipe(catchError(this.handleError),map(() => null))
+    return this.http.delete(url).pipe(catchError(this.handleError), map(() => null))
   }
 
   private handleError(error: any): Observable<any> {
@@ -50,12 +50,17 @@ export class EntryService {
   }
 
   private jsonDataToCategorias(jsonData: any[]): Entry[] {
-    const entries: Entry [] =[];
-    jsonData.forEach(element => entries.push(element as Entry));
+    const entries: Entry[] = [];
+    //jsonData.forEach(element => entries.push(element as Entry)); //desta forma algumas informações não são preenchidas nos atributos da entidade.
+    jsonData.forEach(element => {
+      const entry = Object.assign(new Entry(), element);
+      entries.push(entry);
+    })
+
     return entries;
   }
 
   private jsonDataToCategoria(jsonData: any): Entry {
-    return jsonData as Entry;
+    return Object.assign(new Entry(), jsonData);// jsonData as Entry
   }
 }
