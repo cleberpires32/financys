@@ -1,11 +1,13 @@
+import { CategoriaService } from './../../shared/categoria.service';
 
-import { Component, OnInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, AfterContentChecked, LOCALE_ID } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from "@angular/router"
 import { Entry } from '../shared/entry.model';
 import { EntryService } from '../shared/entry.service';
 import { switchMap } from 'rxjs';
 import * as toastr from 'toastr';
+import { Categoria } from '../../shared/categoria.model';
 
 @Component({
   selector: 'app-entry-form',
@@ -19,13 +21,37 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   serverErrorMessages: string[] | any;// conjunto de mensagens.
   submitTingForm: boolean = false; //desabilita o botoao para não deixar requisitando formulario sem validações
   entry: Entry = new Entry();
+  categorias: Array<Categoria> | undefined
 
+  imaskConfig = {
+    mask: Number,
+    scale: 2,
+    thousandsSeparator: '',
+    padFractionalZeros: true,
+    normalizeZeros: true,
+    radix: ','
+  }
+
+  ptBR = {
+    firstDayOfWeek: 0,
+    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+    dayNamesMin: ['Do', 'Se', 'Te', 'Qu', 'Qu', 'Se', 'Sa'],
+    monthNames: [
+      'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho',
+      'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+    ],
+    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+    today: 'Hoje',
+    clear: 'Limpar'
+  }
 
   constructor(
     private entryservice: EntryService,
     private route: ActivatedRoute,
     private router: Router,
-    private formbuilder: FormBuilder) { }
+    private formbuilder: FormBuilder,
+    private categoriaService: CategoriaService) { }
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -33,6 +59,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     this.setCurrentAction();//define a formulario esta atuando em questão
     this.buildEntryForm();//controi/defini o formulario de entry
     this.loadEntry();//carrega a entry vindo do base e seta no objeto
+    this.loadCategorias();
 
   }
 
@@ -43,6 +70,18 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     } else {
       this.updateEntry();
     }
+  }
+
+  get typeOptions(): Array<any>{
+    return Object.entries(Entry.types).map(
+      ([value, text]) =>{
+        return {
+          text: text,
+          value: value
+        }
+      }
+    )
+
   }
 
   ngAfterContentChecked(): void {
@@ -65,10 +104,10 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
       id: [null],
       nome: [null, [Validators.required, Validators.minLength(2)]],
       descricao: [null],
-      type: [null, [Validators.required]],
+      type: ['expense', [Validators.required]],
       amount: [null, [Validators.required]],
       date: [null, [Validators.required]],
-      paid: [null, [Validators.required]],
+      paid: [true, [Validators.required]],
       categoriaId: [null, [Validators.required]]
     });
   }
@@ -86,6 +125,12 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
           (error) => alert('Ocorreu um erro no servidor tente mais tarde.')
         )
     }
+  }
+
+  private loadCategorias() {
+    this.categoriaService.getAll().subscribe(
+      categorias => this.categorias = categorias
+    );
   }
 
   private setPageTitle() {
