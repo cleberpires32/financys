@@ -51,7 +51,7 @@ export class EntryService {
     return this.categoriaService.getById(Number(entry.categoriaId)).pipe(mergeMap(categoria => {
       entry.categoria = categoria
 
-      return this.http.put('url', entry).pipe(catchError(this.handleError), map(() => entry))
+      return this.http.put(url, entry).pipe(catchError(this.handleError), map(() => entry))
     })
     )
   }
