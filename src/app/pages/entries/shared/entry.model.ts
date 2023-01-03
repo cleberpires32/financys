@@ -14,6 +14,6 @@ export class Entry {
 
   static types = {
     expense: 'Despesa',
-    renevue: 'Receita'
+    revenue: 'Receita'
   }
 }
