@@ -47,7 +47,13 @@ export class EntryService {
 
   update(entry: Entry): Observable<Entry> {
     const url = `${this.apiPath}/${entry.id}`;
-    return this.http.put('url', entry).pipe(catchError(this.handleError), map(() => entry))
+
+    return this.categoriaService.getById(Number(entry.categoriaId)).pipe(mergeMap(categoria => {
+      entry.categoria = categoria
+
+      return this.http.put('url', entry).pipe(catchError(this.handleError), map(() => entry))
+    })
+    )
   }
 
   delete(id: number): Observable<any> {
