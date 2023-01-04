@@ -160,8 +160,8 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     //nome dosite.com/entrys/new
         //nome dosite.com/entrys
             //nome dosite.com/entrys/:id/edit
-    this.router.navigateByUrl('entrys', {skipLocationChange: true}).then(
-      () => this.router.navigate(['entrys', entry.id, 'edit']))
+    this.router.navigateByUrl('entries', {skipLocationChange: true}).then(
+      () => this.router.navigate(['entries', entry.id, 'edit']))
   }
 
   private actionsForError(error: any)
