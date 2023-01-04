@@ -10,7 +10,7 @@ import { Entry } from '../shared/entry.model';
 })
 export class EntryService {
 
-  private apiPath: string = "api/entries";
+  private apiPath: string = "api/lancamentos";
 
   constructor(private http: HttpClient, private categoriaService: CategoriaService) { }
 
@@ -51,7 +51,10 @@ export class EntryService {
     return this.categoriaService.getById(Number(entry.categoriaId)).pipe(mergeMap(categoria => {
       entry.categoria = categoria
 
-      return this.http.put(url, entry).pipe(catchError(this.handleError), map(() => entry))
+      return this.http.put(url, entry).pipe(
+        catchError(this.handleError),
+        map(() => entry)
+        )
     })
     )
   }

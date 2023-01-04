@@ -1,7 +1,7 @@
 <nav class="mb-5 mt-3 navbar navbar-expand-lg bg-light">
   <ol class="ps-2 mt-2 breadcrumb">
     <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-    <li class="breadcrumb-item"><a routerLink="/entries">Lançamento</a></li>
+    <li class="breadcrumb-item"><a routerLink="/lancamentos">Lançamento</a></li>
     <li class="breadcrumb-item active">{{pageTitle}}</li>
   </ol>
 </nav>
@@ -11,7 +11,7 @@
     <h1 class="h2 border-left ps-2">{{pageTitle}}</h1>
   </div>
   <div class="col-md-3">
-    <a routerLink="/entries" class="btn float-md-end btn-light">
+    <a routerLink="/lancamentos" class="btn float-md-end btn-light">
       << Voltar</a>
   </div>
 </div>
@@ -27,7 +27,7 @@
 
           <label for="type">Tipo</label>
           <select name="type" id="type" class="form-select" formControlName="type">
-            <option *ngFor="let option of typeOptions" [value]="option.value">{{option.text}}</option>
+            <option *ngFor="let option of typeOptions" [value]="option.text">{{option.value}}</option>
           </select>
 
           <div class="text-danger" *ngIf="entryForm.get('type').invalid && entryForm.get('type').touched">
@@ -86,7 +86,7 @@
           <div class="form-group col-md-3">
             <label for="categoriaId">Categoria</label>
             <select name="categoriaId" id="categoriaId" class="form-select" formControlName="categoriaId">
-              <option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nome}}</option>>
+              <option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nome}}</option>
             </select>
 
             <div class="text-danger" *ngIf="entryForm.get('categoriaId').invalid && entryForm.get('categoriaId').touched">
@@ -118,4 +118,4 @@
 
 </form>
 
-<!--pre>{{entryForm.value | json}}</pre -->
+<pre>{{entryForm.value | json}}</pre>

@@ -1,4 +1,3 @@
-import { CategoriaService } from './../../shared/categoria.service';
 
 import { Component, OnInit, AfterContentChecked, LOCALE_ID } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -8,6 +7,8 @@ import { EntryService } from '../shared/entry.service';
 import { switchMap } from 'rxjs';
 import * as toastr from 'toastr';
 import { Categoria } from '../../shared/categoria.model';
+import { CategoriaService } from '../../shared/categoria.service';
+
 
 @Component({
   selector: 'app-entry-form',
@@ -60,6 +61,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     this.buildEntryForm();//controi/defini o formulario de entry
     this.loadEntry();//carrega a entry vindo do base e seta no objeto
     this.loadCategorias();
+    this.typeOptions;
 
   }
 
@@ -104,7 +106,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
       id: [null],
       nome: [null, [Validators.required, Validators.minLength(2)]],
       descricao: [null],
-      type: ['expense', [Validators.required]],
+      type: [null, [Validators.required]],
       amount: [null, [Validators.required]],
       date: [null, [Validators.required]],
       paid: [true, [Validators.required]],
@@ -160,8 +162,8 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     //nome dosite.com/entrys/new
         //nome dosite.com/entrys
             //nome dosite.com/entrys/:id/edit
-    this.router.navigateByUrl('entrys', {skipLocationChange: true}).then(
-      () => this.router.navigate(['entrys', entry.id, 'edit']))
+    this.router.navigateByUrl('lancamentos', {skipLocationChange: true}).then(
+      () => this.router.navigate(['lancamentos', entry.id, 'edit']))
   }
 
   private actionsForError(error: any)
