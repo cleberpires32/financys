@@ -1,4 +1,4 @@
-import { Categoria } from './../../shared/categoria.model';
+import { Categoria } from '../../categoria/shared/categoria.model';
 export class Entry {
   constructor(
     public id?: number,

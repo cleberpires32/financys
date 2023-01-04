@@ -1,4 +1,4 @@
-import { CategoriaService } from './../../shared/categoria.service';
+import { CategoriaService } from '../../categoria/shared/categoria.service';
 
 import { Component, OnInit, AfterContentChecked, LOCALE_ID } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -7,7 +7,7 @@ import { Entry } from '../shared/entry.model';
 import { EntryService } from '../shared/entry.service';
 import { switchMap } from 'rxjs';
 import * as toastr from 'toastr';
-import { Categoria } from '../../shared/categoria.model';
+import { Categoria } from '../../categoria/shared/categoria.model';
 
 @Component({
   selector: 'app-entry-form',

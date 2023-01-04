@@ -1,4 +1,4 @@
-import { CategoriaService } from './../../shared/categoria.service';
+import { CategoriaService } from '../../categoria/shared/categoria.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
