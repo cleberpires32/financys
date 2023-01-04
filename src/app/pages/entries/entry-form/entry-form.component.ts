@@ -1,4 +1,5 @@
 
+
 import { Component, OnInit, AfterContentChecked, LOCALE_ID } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from "@angular/router"
@@ -6,8 +7,9 @@ import { Entry } from '../shared/entry.model';
 import { EntryService } from '../shared/entry.service';
 import { switchMap } from 'rxjs';
 import * as toastr from 'toastr';
-import { Categoria } from '../../shared/categoria.model';
-import { CategoriaService } from '../../shared/categoria.service';
+import { Categoria } from '../../categoria/shared/categoria.model';
+import { CategoriaService } from '../../categoria/shared/categoria.service';
+
 
 
 @Component({
@@ -162,8 +164,13 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     //nome dosite.com/entrys/new
         //nome dosite.com/entrys
             //nome dosite.com/entrys/:id/edit
+
     this.router.navigateByUrl('lancamentos', {skipLocationChange: true}).then(
       () => this.router.navigate(['lancamentos', entry.id, 'edit']))
+
+    this.router.navigateByUrl('entries', {skipLocationChange: true}).then(
+      () => this.router.navigate(['entries', entry.id, 'edit']))
+
   }
 
   private actionsForError(error: any)
