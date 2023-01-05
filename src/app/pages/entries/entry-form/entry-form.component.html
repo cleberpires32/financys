@@ -27,7 +27,9 @@
 
           <label for="type">Tipo</label>
           <select name="type" id="type" class="form-select" formControlName="type">
-            <option *ngFor="let option of typeOptions" [value]="option.text">{{option.value}}</option>
+            <!--option *ngFor="let option of typeOptions" [value]="option.value">{{option.text}}</option-->
+            <option value ="revenue">Receita</option>
+            <option value ="expense">Despesa</option>
           </select>
 
           <div class="text-danger" *ngIf="entryForm.get('type').invalid && entryForm.get('type').touched">
@@ -118,4 +120,4 @@
 
 </form>
 
-<pre>{{entryForm.value | json}}</pre>
+<!--pre>{{entryForm.value | json}}</pre-->

@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 
 
 import { Component, OnInit, AfterContentChecked, LOCALE_ID } from '@angular/core';
@@ -9,6 +10,7 @@ import { switchMap } from 'rxjs';
 import * as toastr from 'toastr';
 import { Categoria } from '../../categoria/shared/categoria.model';
 import { CategoriaService } from '../../categoria/shared/categoria.service';
+import { MapType } from '@angular/compiler';
 
 
 
@@ -108,7 +110,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
       id: [null],
       nome: [null, [Validators.required, Validators.minLength(2)]],
       descricao: [null],
-      type: [null, [Validators.required]],
+      type: ['renevue', [Validators.required]],
       amount: [null, [Validators.required]],
       date: [null, [Validators.required]],
       paid: [true, [Validators.required]],
